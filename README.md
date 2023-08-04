@@ -10,6 +10,8 @@
   <a href="#computer-development">Development</a> &#xa0; &#xa0;
 </p>
 
+## :tada: Live: http://54.167.108.88:8501 ##
+
 ## :green_book: About ##
 
 This the repo for a flan-t5-xl based Arxiv interaction platform, for summarizing and asking questions about Arxiv papers. For details on the theory behind the app, check out our blog [here](gitbooks.com). The frontend is built and served using [Streamlit](https://streamlit.io), and individual models are accessed using simple [FastApi](https://fastapi.tiangolo.com) servers. The vector database required for question answering is designed using a modified version of [VLite](https://github.com/vlitejs/vlite) - specifically the text chunking functionality is customised, and can be easily overwritten in _/embeddings/app/vlite/utils.py_. 
