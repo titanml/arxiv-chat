@@ -1,6 +1,6 @@
 services:
   summarizer:
-    image: tytn/takeoff
+    image: takeoff
     networks:
       - backend
     ports:
@@ -23,7 +23,7 @@ services:
               count: 1
               capabilities: [gpu]
   qna:
-    image: tytn/takeoff
+    image: takeoff
     networks:
       - backend
     ports:
