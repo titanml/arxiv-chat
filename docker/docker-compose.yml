@@ -1,0 +1,79 @@
+services:
+  summarizer:
+    image: tytn/takeoff
+    networks:
+      - backend
+    ports:
+      - "8000:80"
+    volumes:
+      - /home/ubuntu/.iris_cache/flanxl-arxiv-summarizer/:/code/models/flanxl-arxiv-summarizer
+    environment:
+      - QUANT_TYPE=bfloat16
+      - ACCESS_TOKEN=1234567890
+      - DEVICE=cuda
+      - CONVERT=false
+      - RELOAD=1
+      - MODEL_NAME=flanxl-arxiv-summarizer
+      - HOST_URL=http://localhost:8000
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+  qna:
+    image: tytn/takeoff
+    networks:
+      - backend
+    ports:
+      - "8001:80"
+    volumes:
+      - /home/ubuntu/.iris_cache/flanxl-arxiv-qa/:/code/models/flanxl-arxiv-qa
+    environment:
+      - QUANT_TYPE=bfloat16
+      - ACCESS_TOKEN=1234567890
+      - DEVICE=cuda
+      - CONVERT=false
+      - RELOAD=1
+      - MODEL_NAME=flanxl-arxiv-qa
+      - HOST_URL=http://localhost:8001
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+  embeddings:
+    image: embed
+    networks:
+      - backend
+    ports:
+      - "8002:80"
+    volumes:
+      - /home/ubuntu/dev/chat-arxiv-local/embeddings/data:/code/data
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+  frontend:
+    image: frontend
+    networks:
+      - backend
+    ports:
+      - "8501:8501"
+    environment:
+      - SUMMARIZER_LOCATION=http://summarizer:80
+      - QNA_LOCATION=http://qna:80
+      - EMBED_LOCATION=http://embeddings:80
+    depends_on:
+      - embeddings
+      - summarizer
+      - qna
+networks:
+  backend:
+    driver: bridge

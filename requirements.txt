@@ -1,0 +1,9 @@
+streamlit==1.24.0
+torch==2.0.1
+transformers==4.30.2
+arxiv==1.4.7
+langchain==0.0.219
+pymupdf==1.22.5
+openai==0.27.8
+accelerate==0.20.3
+ctranslate2==3.16.1
