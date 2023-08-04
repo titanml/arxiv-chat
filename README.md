@@ -16,7 +16,7 @@ This the repo for a flan-t5-xl based Arxiv interaction platform, for summarizing
 
 ## :computer: Development ##
 
-To run this app yourself requires Docker. 3 apps need to be built individually, and then unified with Docker Compose. \
+To run this app yourself requires Docker. Three components need to be built individually and then unified with Docker Compose. \
 From in _/src_, run:
 ``` 
 docker build -t frontend .
@@ -32,7 +32,7 @@ docker build -t takeoff .
 
 All endpoints can be customised to match the needs of your models. The summarizer and Q&A models need to be downloaded and accessible, to be volume mounted into the Takeoff container - follow instructions at the specific repo for how to setup.
 
-To run the whole system, navigate to _/docker_ and run:
+To run the whole system, navigate to _/docker_, customize the yaml file with the locations of your models and any other differences, and run:
 ```
 docker compose up
 ```
